@@ -1,4 +1,6 @@
 from flask import Flask, request, abort
+from linebot import LineBotApi, WebhookHandler
+from linebot.exceptions import InvalidSignatureError
 import os
 import json
 import random
@@ -14,10 +16,13 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage, FlexSendMessage,FollowEvent,StickerMessage, StickerSendMessage
 )
 
+
+
 app = Flask(__name__)
 
 line_bot_api = LineBotApi('oVkk0/VILASxZlIMGTIZB96O9MZmqNDibC5pDGQWqMxlyX+uYdX4gVOcNNn/NbTKRPbLHl1jW+mSy2Xy9N+hKtYgLVrPtNFCBECy61PzfvqHM62Te5nKq8xwWFEGqfLxI8B6nTJKSu8dPK4b/7RSCQdB04t89/1O/w1cDnyilFU=')
 handler = WebhookHandler('33c053fe8f9f91cb370128a7f77f95e5')
+
 
 f = open('testFlex.json', 'r',encoding='utf-8')
 flex_message_json_dict = json.load(f)
@@ -64,7 +69,11 @@ def handle_message(event):
                 contents=flex_message_json_dict
             )
         )
-    line_bot_api.broadcast(TextSendMessage(text=event.message.text))
+    else:
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="レシピと送信してね"))
+    #line_bot_api.broadcast(TextSendMessage(text=event.message.text))
 
 
 #スタンプ送信用
@@ -101,5 +110,6 @@ def follow_message(event):# event: LineMessagingAPIで定義されるリクエ�
 
 
 if __name__ == "__main__":
+    #port = int(os.getenv("PORT"))
     app.run(debug=True)
 
