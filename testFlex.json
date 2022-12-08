@@ -93,9 +93,9 @@
           {
             "type": "button",
             "action": {
-              "type": "message",
+              "type": "postback",
               "label": "作る！！！",
-              "text": "ホールケーキ"
+              "data": "ホールケーキ"
             }
           }
         ]
@@ -193,9 +193,9 @@
           {
             "type": "button",
             "action": {
-              "type": "message",
+              "type": "postback",
               "label": "作る！！！",
-              "text": "シュークリーム"
+              "data": "シュークリーム"
             }
           }
         ]
@@ -292,9 +292,9 @@
           {
             "type": "button",
             "action": {
-              "type": "message",
+              "type": "postback",
               "label": "作る！！！",
-              "text": "ティラミス"
+              "data": "ティラミス"
             }
           }
         ]

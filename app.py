@@ -35,14 +35,16 @@ def callback():
 
     body = request.get_data(as_text=True)
     #line_bot_api.broadcast(TextSendMessage(text="💩"))
-    """
     # postbackがあるかないか探してjsonファイルのdataを取り出す
     body_json_data = json.loads(body)
     body_json_data = body_json_data["events"][0].get("postback")
     if body_json_data != None:
-        if body_json_data == {'data': 'お前天才やん'}:
-            print("")
-    """
+        if body_json_data == {'data': 'ホールケーキ'}:
+            print("制作中")
+        elif body_json_data == {'data': 'シュークリーム'}:
+            print("制作中")
+        elif body_json_data == {'data': 'ティラミス'}:
+            print("制作中")
 
     # いじらない
     try:
