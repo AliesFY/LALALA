@@ -94,6 +94,7 @@ def handle_sticker_message(event):
         sticker_id=sticker_ids[0]
     )
 
+
     line_bot_api.broadcast(sticker_message)
 """
 
