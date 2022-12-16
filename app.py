@@ -30,8 +30,17 @@ rich_menu_to_create = RichMenu(
             size = RichMenuSize(width=2500, height=843),
             selected = True,
             name = "Nice richmenu",
-            chat_bar_text = "Tap here",
-            areas = [RichMenuArea(bounds = RichMenuBounds(x = 0, y = 0, width = 2500, height = 843),action = URIAction(label = 'Go to line.me', uri = 'https://line.me'))]
+            chat_bar_text = "ここをタッチ",
+            areas = [
+                RichMenuArea(
+                    bounds=RichMenuBounds(x=0, y=0, width=480, height=405),
+                    action=MessageAction(text="レシピ")
+                ),
+                RichMenuArea(
+                    bounds=RichMenuBounds(x=480, y=0, width=720, height=405),
+                    action=MessageAction(text="レシピ")
+                )
+            ]
         )
     
 richmenuid = line_bot_api.create_rich_menu(rich_menu = rich_menu_to_create)
