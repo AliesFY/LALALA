@@ -32,20 +32,37 @@ rich_menu_to_create = RichMenu(
             name = "Nice richmenu",
             chat_bar_text = "ここをタッチ",
             areas = [
-                RichMenuArea(
-                    bounds=RichMenuBounds(x=0, y=0, width=480, height=405),
-                    action=MessageAction(text="レシピ")
-                ),
-                RichMenuArea(
-                    bounds=RichMenuBounds(x=480, y=0, width=720, height=405),
-                    action=MessageAction(text="レシピ")
-                )
+                {
+                    "bounds": {"x": 551, "y": 325, "width": 321, "height": 321},
+                    "action": {"type": "message", "text": "up"}
+                },
+                {
+                    "bounds": {"x": 876, "y": 651, "width": 321, "height": 321},
+                    "action": {"type": "message", "text": "right"}
+                },
+                {
+                    "bounds": {"x": 551, "y": 972, "width": 321, "height": 321},
+                    "action": {"type": "message", "text": "down"}
+                },
+                {
+                    "bounds": {"x": 225, "y": 651, "width": 321, "height": 321},
+                    "action": {"type": "message", "text": "left"}
+                },
+                {
+                    "bounds": {"x": 1433, "y": 657, "width": 367, "height": 367},
+                    "action": {"type": "message", "text": "btn b"}
+                },
+                {
+                    "bounds": {"x": 1907, "y": 657, "width": 367, "height": 367},
+                    "action": {"type": "message", "text": "btn a"}
+                }
             ]
         )
     
 richmenuid = line_bot_api.create_rich_menu(rich_menu = rich_menu_to_create)
 
 # RichMenu用の画像
+"""
 path = r"insta222.png"
 
 # 画像をRichMenuに指定
@@ -54,7 +71,7 @@ with open(path, 'rb') as f:
 
 # デフォルトのRichMenuに設定する
 line_bot_api.set_default_rich_menu(richmenuid)
-
+"""
 
 
 @app.route("/callback", methods=['POST'])
