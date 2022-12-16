@@ -1,10 +1,7 @@
 from flask import Flask, request, abort
-from linebot import LineBotApi, WebhookHandler
-from linebot.exceptions import InvalidSignatureError
 import os
 import json
 import random
-
 
 from linebot import (
     LineBotApi, WebhookHandler
@@ -13,7 +10,8 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage, FlexSendMessage,FollowEvent,StickerMessage, StickerSendMessage
+    MessageEvent, TextMessage, TextSendMessage, FlexSendMessage,FollowEvent,StickerMessage, StickerSendMessage,
+    RichMenu, RichMenuSize, RichMenuArea, RichMenuBounds, MessageAction,URIAction
 )
 
 
@@ -28,6 +26,28 @@ f = open('testFlex.json', 'r',encoding='utf-8')
 flex_message_json_dict = json.load(f)
 #line_bot_api.broadcast(TextSendMessage(text ="スタ爆したらやばいよ♡" ))
 
+rich_menu_to_create = RichMenu(
+            size = RichMenuSize(width=2500, height=843),
+            selected = True,
+            name = "Nice richmenu",
+            chat_bar_text = "Tap here",
+            areas = [RichMenuArea(bounds = RichMenuBounds(x = 0, y = 0, width = 2500, height = 843),action = URIAction(label = 'Go to line.me', uri = 'https://line.me'))]
+        )
+    
+richmenuid = line_bot_api.create_rich_menu(rich_menu = rich_menu_to_create)
+
+# RichMenu用の画像
+path = r"insta222.png"
+
+# 画像をRichMenuに指定
+with open(path, 'rb') as f:
+    line_bot_api.set_rich_menu_image(richmenuid, "image/png", f)
+
+# デフォルトのRichMenuに設定する
+line_bot_api.set_default_rich_menu(richmenuid)
+
+
+
 @app.route("/callback", methods=['POST'])
 def callback():
     # いじらない
@@ -37,14 +57,17 @@ def callback():
     #line_bot_api.broadcast(TextSendMessage(text="💩"))
     # postbackがあるかないか探してjsonファイルのdataを取り出す
     body_json_data = json.loads(body)
-    body_json_data = body_json_data["events"][0].get("postback")
-    if body_json_data != None:
-        if body_json_data == {'data': 'ホールケーキ'}:
-            print("制作中")
-        elif body_json_data == {'data': 'シュークリーム'}:
-            print("制作中")
-        elif body_json_data == {'data': 'ティラミス'}:
-            print("制作中")
+    try:
+        body_json_data = body_json_data["events"][0].get("postback")
+        if body_json_data != None:
+            if body_json_data == {'data': 'ホールケーキ'}:
+                print("制作中")
+            elif body_json_data == {'data': 'シュークリーム'}:
+                print("制作中")
+            elif body_json_data == {'data': 'ティラミス'}:
+                print("制作中")
+    except IndexError:
+        print("検証")
 
     # いじらない
     try:
@@ -79,7 +102,7 @@ def handle_message(event):
 
 
 #スタンプ送信用
-"""
+
 @handler.add(MessageEvent, message=StickerMessage)
 def handle_sticker_message(event):
 
@@ -94,9 +117,17 @@ def handle_sticker_message(event):
         sticker_id=sticker_ids[0]
     )
 
-    line_bot_api.broadcast(sticker_message)
+    sticker_messagetest = StickerSendMessage(
+        package_id="6325",
+        sticker_id="10979922"
+    )
 
-"""
+    #line_bot_api.broadcast(sticker_message)
+    line_bot_api.reply_message(
+            event.reply_token,
+            sticker_messagetest)
+
+
 
 
 #友達追加時メッセージ的な
