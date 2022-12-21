@@ -11,7 +11,8 @@ from linebot.exceptions import (
 )
 from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage, FlexSendMessage,FollowEvent,StickerMessage, StickerSendMessage,
-    RichMenu, RichMenuSize, RichMenuArea, RichMenuBounds, MessageAction,URIAction,PostbackEvent
+    RichMenu, RichMenuSize, RichMenuArea, RichMenuBounds, MessageAction,URIAction,PostbackEvent,ButtonsTemplate,
+    TemplateSendMessage,PostbackAction
 )
 
 
@@ -27,18 +28,22 @@ flex_message_json_dict = json.load(f)
 #line_bot_api.broadcast(TextSendMessage(text ="ああああああああああああああああああ" ))
 
 rich_menu_to_create = RichMenu(
-            size = RichMenuSize(width=2500, height=843),
+            size = RichMenuSize(width=1598, height=540),
             selected = True,
             name = "Nice richmenu",
             chat_bar_text = "メニュー",
             areas = [
                 RichMenuArea(
-                    bounds=RichMenuBounds(x=0, y=0, width=480, height=405),
+                    bounds=RichMenuBounds(x=0, y=0, width=533, height=540),
                     action=MessageAction(text="レシピ")
                 ),
                 RichMenuArea(
-                    bounds=RichMenuBounds(x=480, y=0, width=720, height=405),
-                    action=MessageAction(text="うんち")
+                    bounds=RichMenuBounds(x=533, y=0, width=533, height=540),
+                    action=MessageAction(text="クーポン")
+                ),
+                RichMenuArea(
+                    bounds=RichMenuBounds(x=1066, y=0, width=533, height=540),
+                    action=MessageAction(text="お問い合わせ")
                 )
             ]
         )
@@ -108,24 +113,93 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             FlexSendMessage(
-                alt_text='alt_text',
+                alt_text='ホールケーキ、シュークリーム、ティラミス',
                 #contentsパラメタに, dict型の値を渡す
                 contents=flex_message_json_dict
             )
         )
+    elif event.message.text == "クーポン":
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(
+                text="ないよ！！"
+            )
+        )
+    elif event.message.text == "お問い合わせ":
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(
+                text="こちらのメールアドレスまで！\n ○○○○＠○○"
+            )
+        )
+
     else:
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="レシピと送信してね"))
     #line_bot_api.broadcast(TextSendMessage(text=event.message.text))
 
-
+#作る！を押した後
 @handler.add(PostbackEvent)
 def postback_massage(event):
-    #print(event)
-    post_data = event.postback
-    pos = json.loads(post_data)
-    print(pos)
+    post_data = event.postback.data
+    if post_data == "ホールケーキ":
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(
+                text="君には無理だ。他のを作ろう"
+            )
+        )
+    elif post_data == "シュークリーム":
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(
+                text="これのほうが無理だよ・・・"
+            )
+        )
+    elif post_data == "ティラミス":
+        """
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(
+                text="全部無理だね　諦めよっか"
+            )
+        )
+        """
+        buttons_template = ButtonsTemplate(
+                title='味を選んでいくよ!好みを教えてね!', text='まずは甘さから!', actions=[
+                    PostbackAction(label='激アマ', data='激アマ'),
+                    PostbackAction(label='甘め', data='甘め'),
+                    PostbackAction(label='甘さ控えめ', data='甘さ控えめ')
+            ])
+        template_message = TemplateSendMessage(
+                alt_text='Buttons alt text', template=buttons_template)
+        line_bot_api.reply_message(event.reply_token, template_message)
+    
+    if post_data =="激アマ":
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(
+                text="激アマ？引くわぁぁ…"
+            )
+        )
+    elif post_data =="甘め":
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(
+                text="甘め？ケーキ作りなよ"
+            )
+        )
+    elif post_data =="甘さ控えめ":
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(
+                text="甘さ控えめ…？ならスイーツやめたほうがいいんじゃない…？"
+            )
+        )
+
+
+
 
 
 #スタンプ送信用
