@@ -11,7 +11,7 @@ from linebot.exceptions import (
 )
 from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage, FlexSendMessage,FollowEvent,StickerMessage, StickerSendMessage,
-    RichMenu, RichMenuSize, RichMenuArea, RichMenuBounds, MessageAction,URIAction
+    RichMenu, RichMenuSize, RichMenuArea, RichMenuBounds, MessageAction,URIAction,PostbackEvent
 )
 
 
@@ -30,7 +30,7 @@ rich_menu_to_create = RichMenu(
             size = RichMenuSize(width=2500, height=843),
             selected = True,
             name = "Nice richmenu",
-            chat_bar_text = "💩メニュー",
+            chat_bar_text = "メニュー",
             areas = [
                 RichMenuArea(
                     bounds=RichMenuBounds(x=0, y=0, width=480, height=405),
@@ -47,7 +47,7 @@ richmenuid = line_bot_api.create_rich_menu(rich_menu = rich_menu_to_create)
 
 # RichMenu用の画像
 
-path = r"insta222.png"
+path = r"eeyan22.png"
 
 # 画像をRichMenuに指定
 with open(path, 'rb') as f:
@@ -67,6 +67,7 @@ def callback():
     #line_bot_api.broadcast(TextSendMessage(text="💩"))
     # postbackがあるかないか探してjsonファイルのdataを取り出す
     body_json_data = json.loads(body)
+    """
     try:
         body_json_data = body_json_data["events"][0].get("postback")
         if body_json_data != None:
@@ -78,6 +79,7 @@ def callback():
                 print("制作中")
     except IndexError:
         print("検証")
+    """
 
     # いじらない
     try:
@@ -94,6 +96,13 @@ def callback():
 #レシピ送信用
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+    """
+    sakura = event.source.user_id
+    if sakura == "U2bdc11c13e81f999b6ac23e366eec1ce":
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="さくらはうんち"))
+    """
     if event.message.text == "レシピ":
         print(type(flex_message_json_dict))
         line_bot_api.reply_message(
@@ -110,6 +119,13 @@ def handle_message(event):
             TextSendMessage(text="レシピと送信してね"))
     #line_bot_api.broadcast(TextSendMessage(text=event.message.text))
 
+
+@handler.add(PostbackEvent)
+def postback_massage(event):
+    #print(event)
+    post_data = event.postback
+    pos = json.loads(post_data)
+    print(pos)
 
 
 #スタンプ送信用
