@@ -24,13 +24,13 @@ handler = WebhookHandler('33c053fe8f9f91cb370128a7f77f95e5')
 
 f = open('testFlex.json', 'r',encoding='utf-8')
 flex_message_json_dict = json.load(f)
-#line_bot_api.broadcast(TextSendMessage(text ="スタ爆したらやばいよ♡" ))
+#line_bot_api.broadcast(TextSendMessage(text ="ああああああああああああああああああ" ))
 
 rich_menu_to_create = RichMenu(
             size = RichMenuSize(width=2500, height=843),
             selected = True,
             name = "Nice richmenu",
-            chat_bar_text = "ここをタッチ",
+            chat_bar_text = "💩メニュー",
             areas = [
                 RichMenuArea(
                     bounds=RichMenuBounds(x=0, y=0, width=480, height=405),
@@ -111,6 +111,7 @@ def handle_message(event):
     #line_bot_api.broadcast(TextSendMessage(text=event.message.text))
 
 
+
 #スタンプ送信用
 
 @handler.add(MessageEvent, message=StickerMessage)
@@ -148,7 +149,7 @@ def follow_message(event):# event: LineMessagingAPIで定義されるリクエ�
     if event.type == "follow":# フォロー時のみメッセージを送信
         line_bot_api.reply_message(
             event.reply_token,# イベントの応答に用いるトークン
-            TextSendMessage(text="フォローありがとうございます！\nレシピ一覧は'うんち'で見れるよ!!"))
+            TextSendMessage(text="フォローありがとうございます！\nレシピ一覧は'レシピ'で見れるよ!!"))
 
 
 
