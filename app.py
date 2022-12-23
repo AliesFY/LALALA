@@ -11,9 +11,11 @@ from linebot.exceptions import (
 )
 from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage, FlexSendMessage,FollowEvent,StickerMessage, StickerSendMessage,
-    RichMenu, RichMenuSize, RichMenuArea, RichMenuBounds, MessageAction,URIAction,PostbackEvent,ButtonsTemplate,
-    TemplateSendMessage,PostbackAction
+    MessageAction,URIAction,PostbackEvent,
 )
+
+from select_likes import choice_taste
+import richmenu
 
 
 
@@ -23,45 +25,13 @@ line_bot_api = LineBotApi('oVkk0/VILASxZlIMGTIZB96O9MZmqNDibC5pDGQWqMxlyX+uYdX4g
 handler = WebhookHandler('33c053fe8f9f91cb370128a7f77f95e5')
 
 
-f = open('testFlex.json', 'r',encoding='utf-8')
+f = open(r'json/testFlex.json', 'r',encoding='utf-8')
 flex_message_json_dict = json.load(f)
-#line_bot_api.broadcast(TextSendMessage(text ="ああああああああああああああああああ" ))
-
-rich_menu_to_create = RichMenu(
-            size = RichMenuSize(width=1598, height=540),
-            selected = True,
-            name = "Nice richmenu",
-            chat_bar_text = "メニュー",
-            areas = [
-                RichMenuArea(
-                    bounds=RichMenuBounds(x=0, y=0, width=533, height=540),
-                    action=MessageAction(text="レシピ")
-                ),
-                RichMenuArea(
-                    bounds=RichMenuBounds(x=533, y=0, width=533, height=540),
-                    action=MessageAction(text="クーポン")
-                ),
-                RichMenuArea(
-                    bounds=RichMenuBounds(x=1066, y=0, width=533, height=540),
-                    action=MessageAction(text="お問い合わせ")
-                )
-            ]
-        )
-    
-richmenuid = line_bot_api.create_rich_menu(rich_menu = rich_menu_to_create)
-
-# RichMenu用の画像
-
-path = r"eeyan22.png"
-
-# 画像をRichMenuに指定
-with open(path, 'rb') as f:
-    line_bot_api.set_rich_menu_image(richmenuid, "image/png", f)
-
-# デフォルトのRichMenuに設定する
-line_bot_api.set_default_rich_menu(richmenuid)
-
-
+rich_menu_list = line_bot_api.get_rich_menu_list()
+if not rich_menu_list:
+    result = richmenu.createRichmeu()
+    if not result:
+        print("失敗")
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -70,22 +40,6 @@ def callback():
 
     body = request.get_data(as_text=True)
     #line_bot_api.broadcast(TextSendMessage(text="💩"))
-    # postbackがあるかないか探してjsonファイルのdataを取り出す
-    body_json_data = json.loads(body)
-    """
-    try:
-        body_json_data = body_json_data["events"][0].get("postback")
-        if body_json_data != None:
-            if body_json_data == {'data': 'ホールケーキ'}:
-                print("制作中")
-            elif body_json_data == {'data': 'シュークリーム'}:
-                print("制作中")
-            elif body_json_data == {'data': 'ティラミス'}:
-                print("制作中")
-    except IndexError:
-        print("検証")
-    """
-
     # いじらない
     try:
         handler.handle(body, signature)
@@ -136,45 +90,25 @@ def handle_message(event):
     else:
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text="レシピと送信してね"))
-    #line_bot_api.broadcast(TextSendMessage(text=event.message.text))
+            TextSendMessage(text="レシピと送信してね"
+            )
+        )
+        #line_bot_api.broadcast(TextSendMessage(text=event.message.text))
 
 #作る！を押した後
 @handler.add(PostbackEvent)
 def postback_massage(event):
     post_data = event.postback.data
-    if post_data == "ホールケーキ":
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(
-                text="君には無理だ。他のを作ろう"
-            )
-        )
-    elif post_data == "シュークリーム":
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(
-                text="これのほうが無理だよ・・・"
-            )
-        )
-    elif post_data == "ティラミス":
-        """
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(
-                text="全部無理だね　諦めよっか"
-            )
-        )
-        """
-        buttons_template = ButtonsTemplate(
-                title='味を選んでいくよ!好みを教えてね!', text='まずは甘さから!', actions=[
-                    PostbackAction(label='激アマ', data='激アマ'),
-                    PostbackAction(label='甘め', data='甘め'),
-                    PostbackAction(label='甘さ控えめ', data='甘さ控えめ')
-            ])
-        template_message = TemplateSendMessage(
-                alt_text='Buttons alt text', template=buttons_template)
-        line_bot_api.reply_message(event.reply_token, template_message)
+    match post_data:
+        case "ホールケーキ":
+            select_ho = choice_taste()
+            select_ho.select1(event)
+        case "シュークリーム":
+            select_syu = choice_taste()
+            select_syu.select1(event)
+        case  "ティラミス":
+            select_thi = choice_taste()
+            select_thi.select1(event)
     
     if post_data =="激アマ":
         line_bot_api.reply_message(
@@ -243,8 +177,8 @@ def follow_message(event):# event: LineMessagingAPIで定義されるリクエ�
 
 
 
-
 if __name__ == "__main__":
     #port = int(os.getenv("PORT"))
     app.run(debug=True)
 
+#flask run --debugger --reload
