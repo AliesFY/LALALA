@@ -15,7 +15,7 @@ from linebot.models import (
 )
 
 from select_likes import choice_taste
-import richmenu
+import richmenu, reply, testcount
 
 
 
@@ -24,32 +24,31 @@ app = Flask(__name__)
 line_bot_api = LineBotApi('oVkk0/VILASxZlIMGTIZB96O9MZmqNDibC5pDGQWqMxlyX+uYdX4gVOcNNn/NbTKRPbLHl1jW+mSy2Xy9N+hKtYgLVrPtNFCBECy61PzfvqHM62Te5nKq8xwWFEGqfLxI8B6nTJKSu8dPK4b/7RSCQdB04t89/1O/w1cDnyilFU=')
 handler = WebhookHandler('33c053fe8f9f91cb370128a7f77f95e5')
 
+count = 0
 
+#FlexMessageのjsonの読み込み
 f = open(r'json/testFlex.json', 'r',encoding='utf-8')
 flex_message_json_dict = json.load(f)
+
+#Richmenuの読み込み
 rich_menu_list = line_bot_api.get_rich_menu_list()
 if not rich_menu_list:
     result = richmenu.createRichmeu()
     if not result:
         print("失敗")
 
+# いじらない
 @app.route("/callback", methods=['POST'])
 def callback():
-    # いじらない
     signature = request.headers['X-Line-Signature']
-
     body = request.get_data(as_text=True)
     #line_bot_api.broadcast(TextSendMessage(text="💩"))
-    # いじらない
     try:
         handler.handle(body, signature)
     except InvalidSignatureError:
         print("Invalid signature. Please check your channel access token/channel secret.")
         abort(400)
-
     return 'OK'
-
-
 
 
 #レシピ送信用
@@ -62,78 +61,68 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(text="さくらはうんち"))
     """
-    if event.message.text == "レシピ":
-        print(type(flex_message_json_dict))
-        line_bot_api.reply_message(
-            event.reply_token,
-            FlexSendMessage(
-                alt_text='ホールケーキ、シュークリーム、ティラミス',
-                #contentsパラメタに, dict型の値を渡す
-                contents=flex_message_json_dict
+    match event.message.text:
+        case "レシピ":
+            print(type(flex_message_json_dict))
+            line_bot_api.reply_message(
+                event.reply_token,
+                FlexSendMessage(
+                    alt_text='ホールケーキ、シュークリーム、ティラミス',
+                    #contentsパラメタに, dict型の値を渡す
+                    contents=flex_message_json_dict
+                )
             )
-        )
-    elif event.message.text == "クーポン":
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(
-                text="ないよ！！"
-            )
-        )
-    elif event.message.text == "お問い合わせ":
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(
-                text="こちらのメールアドレスまで！\n ○○○○＠○○"
-            )
-        )
-
-    else:
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text="レシピと送信してね"
-            )
-        )
-        #line_bot_api.broadcast(TextSendMessage(text=event.message.text))
+        case "クーポン":
+            reply.reply_message(event, "ないよ！！")
+        case "お問い合わせ":
+            reply.reply_message(event, "こちらのメールアドレスまで！\n○○○○@○○")
+        case _:
+            reply.reply_message(event, "レシピと送信してね！")
+            #line_bot_api.broadcast(TextSendMessage(text=event.message.text))
 
 #作る！を押した後
 @handler.add(PostbackEvent)
 def postback_massage(event):
     post_data = event.postback.data
+    
     match post_data:
         case "ホールケーキ":
-            select_ho = choice_taste()
+            select_ho = choice_taste("ホールケーキ")
             select_ho.select1(event)
+            testcount.count0 = select_ho
         case "シュークリーム":
-            select_syu = choice_taste()
+            select_syu = choice_taste("シュークリーム")
             select_syu.select1(event)
+            testcount.count0 = select_syu
         case  "ティラミス":
-            select_thi = choice_taste()
+            select_thi = choice_taste("ティラミス")
             select_thi.select1(event)
+            testcount.count0 = select_thi
     
-    if post_data =="激アマ":
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(
-                text="激アマ？引くわぁぁ…"
-            )
-        )
-    elif post_data =="甘め":
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(
-                text="甘め？ケーキ作りなよ"
-            )
-        )
-    elif post_data =="甘さ控えめ":
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(
-                text="甘さ控えめ…？ならスイーツやめたほうがいいんじゃない…？"
-            )
-        )
+    match post_data:
+        case "激アマ":
+            testcount.count0.select2(event)
+            testcount.count1 = 0
+        case "甘め":
+            testcount.count0.select2(event)
+            testcount.count1 = 1
+        case"甘さ控えめ":
+            testcount.count0.select2(event)
+            testcount.count1 = 2
 
+    match post_data:
+        case "1":
+            testcount.count2 = 0
+            reply.reply_message(event, testcount.count0.result())
+        case "2":
+            testcount.count2 = 1
+            reply.reply_message(event, testcount.count0.result())
 
+        case "3":
+            testcount.count2 = 2
+            reply.reply_message(event, testcount.count0.result())
 
+    
 
 
 #スタンプ送信用
@@ -181,4 +170,6 @@ if __name__ == "__main__":
     #port = int(os.getenv("PORT"))
     app.run(debug=True)
 
+
+#実行コマンド↓
 #flask run --debugger --reload
