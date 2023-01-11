@@ -8,7 +8,7 @@ from linebot.models import (ButtonsTemplate, PostbackAction, TemplateSendMessage
 
 import app, testcount, reply
 
-line_bot_api = LineBotApi('oVkk0/VILASxZlIMGTIZB96O9MZmqNDibC5pDGQWqMxlyX+uYdX4gVOcNNn/NbTKRPbLHl1jW+mSy2Xy9N+hKtYgLVrPtNFCBECy61PzfvqHM62Te5nKq8xwWFEGqfLxI8B6nTJKSu8dPK4b/7RSCQdB04t89/1O/w1cDnyilFU=')
+line_bot_api = LineBotApi('g40p1VQDlWGVMHyMd7pL2kZXGj/Qxx0g35zTCf7+NhIN/cUm/8aQLAYzMoTsaY/cRPbLHl1jW+mSy2Xy9N+hKtYgLVrPtNFCBECy61Pzfvp4j1gxY/C4LoKe46fzT1shWO08PkQxz3Up0MBnk9910QdB04t89/1O/w1cDnyilFU=')
 handler = WebhookHandler('33c053fe8f9f91cb370128a7f77f95e5')
 taste_flevor = ["激アマ", "甘め", "甘さ控えめ"]
 people_count = ["1人分", "2人分", "3人分"]
@@ -20,13 +20,14 @@ class choice_taste:
 
     def select1(self, event):
         buttons_template = ButtonsTemplate(
-                    title='味を選んでいくよ!好みを教えてね!', text='まずは甘さから!', actions=[
+                    title="作るもの：" +self.name +'\n\n味を選んでいくよ!\nあなたの好みを教えてね!', text='まずは甘さから!', actions=[
                         PostbackAction(label='激アマ', data='激アマ'),
                         PostbackAction(label='甘め', data='甘め'),
                         PostbackAction(label='甘さ控えめ', data='甘さ控えめ')
                 ])
         template_message = TemplateSendMessage(
-            alt_text='Buttons alt text', template=buttons_template)
+            alt_text='甘さを選んでね', template=buttons_template)
+        testcount.select_count = 1
         return line_bot_api.reply_message(event.reply_token, template_message)
 
     def select2(self, event):
@@ -37,8 +38,9 @@ class choice_taste:
                         PostbackAction(label='3人分', data='3')
                 ])
         template_message = TemplateSendMessage(
-            alt_text='Buttons alt text', template=buttons_template)
+            alt_text='何人分か選んでね', template=buttons_template)
         return line_bot_api.reply_message(event.reply_token, template_message)
 
     def result(self):
-        return "あなたは" + testcount.count0.name + "の、味は" + taste_flevor[testcount.count1] + "で、" + people_count[testcount.count2] + "を選びました"
+        testcount.select_count = 0
+        return "あなたは" + testcount.recipi_count.name + "の、味は" + taste_flevor[testcount.sweet_count] + "で、" + people_count[testcount.amount_count] + "を選びました"

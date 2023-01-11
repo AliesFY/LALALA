@@ -34,7 +34,7 @@ def init_menu(line_bot_api):
 
     # RichMenu用の画像
 
-    path = r"eeyan22.png"
+    path = r"image/eeyan22.png"
 
     # 画像をRichMenuに指定
     with open(path, 'rb') as f:
