@@ -27,7 +27,7 @@ handler = WebhookHandler('33c053fe8f9f91cb370128a7f77f95e5')
 count = 0
 
 #FlexMessageのjsonの読み込み
-f = open(r'json/testFlex.json', 'r',encoding='utf-8')
+f = open(r'../json/testFlex.json', 'r',encoding='utf-8')
 flex_message_json_dict = json.load(f)
 
 #Richmenuの読み込み
@@ -54,16 +54,8 @@ def callback():
 #レシピ送信用
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    """
-    sakura = event.source.user_id
-    if sakura == "U2bdc11c13e81f999b6ac23e366eec1ce":
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text="さくらはうんち"))
-    """
     match event.message.text:
         case "レシピ":
-            print(type(flex_message_json_dict))
             line_bot_api.reply_message(
                 event.reply_token,
                 FlexSendMessage(
@@ -77,8 +69,9 @@ def handle_message(event):
         case "お問い合わせ":
             reply.reply_message(event, "こちらのメールアドレスまで！\n○○○○@○○")
         case _:
-            reply.reply_message(event, "レシピと送信してね！")
+            #reply.reply_message(event, "レシピと送信してね！")
             #line_bot_api.broadcast(TextSendMessage(text=event.message.text))
+            pass
 
 #作る！を押した後
 @handler.add(PostbackEvent)
@@ -107,3 +100,4 @@ if __name__ == "__main__":
 
 #実行コマンド↓
 #flask run --debugger --reload
+#さくらID　U2bdc11c13e81f999b6ac23e366eec1ce

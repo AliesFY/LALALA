@@ -12,6 +12,7 @@ line_bot_api = LineBotApi('g40p1VQDlWGVMHyMd7pL2kZXGj/Qxx0g35zTCf7+NhIN/cUm/8aQL
 handler = WebhookHandler('33c053fe8f9f91cb370128a7f77f95e5')
 taste_flevor = ["激アマ", "甘め", "甘さ控えめ"]
 people_count = ["1人分", "2人分", "3人分"]
+finalans = ["いいよ！", "やり直す"]
 
 class choice_taste:
     def __init__(self, name):
@@ -41,6 +42,13 @@ class choice_taste:
             alt_text='何人分か選んでね', template=buttons_template)
         return line_bot_api.reply_message(event.reply_token, template_message)
 
-    def result(self):
-        testcount.select_count = 0
-        return "あなたは" + testcount.recipi_count.name + "の、味は" + taste_flevor[testcount.sweet_count] + "で、" + people_count[testcount.amount_count] + "を選びました"
+    def result(self, event):
+        buttons_template = ButtonsTemplate(
+                    title='確認だよこれでいいかな？', text="あなたは" + testcount.recipi_count.name + "の、味は" + taste_flevor[testcount.sweet_count] + "で、" + people_count[testcount.amount_count] + "を選びました",
+                    actions=[
+                        PostbackAction(label='いいよ！', data='いいよ！'),
+                        PostbackAction(label='やり直す', data='やり直す')
+                ])
+        template_message = TemplateSendMessage(
+            alt_text='最終確認', template=buttons_template)
+        return line_bot_api.reply_message(event.reply_token, template_message)

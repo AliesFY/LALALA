@@ -6,7 +6,7 @@ from linebot.exceptions import (
 )
 from linebot.models import PostbackEvent
 
-import app, testcount, reply,select_likes
+import app, testcount, reply,select_likes,recipi
 
 line_bot_api = LineBotApi('g40p1VQDlWGVMHyMd7pL2kZXGj/Qxx0g35zTCf7+NhIN/cUm/8aQLAYzMoTsaY/cRPbLHl1jW+mSy2Xy9N+hKtYgLVrPtNFCBECy61Pzfvp4j1gxY/C4LoKe46fzT1shWO08PkQxz3Up0MBnk9910QdB04t89/1O/w1cDnyilFU=')
 handler = WebhookHandler('33c053fe8f9f91cb370128a7f77f95e5')
@@ -49,13 +49,20 @@ def postbacksec(event):
             match post_data:
                 case "1":
                     testcount.amount_count = 0
-                    reply.reply_message(event, testcount.recipi_count.result())
+                    testcount.recipi_count.result(event)
                 case "2":
                     testcount.amount_count = 1
-                    reply.reply_message(event, testcount.recipi_count.result())
-
+                    testcount.recipi_count.result(event)
                 case "3":
                     testcount.amount_count = 2
-                    reply.reply_message(event, testcount.recipi_count.result())
+                    testcount.recipi_count.result(event)
+
+            match post_data:
+                case "いいよ！":
+                    reply.reply_message(event, recipi.holecake())
+                case "やり直す":
+                    testcount.select_count = 0
+                    reply.reply_message(event, "OK(*^-^*)\nもう一度レシピから選択してね！")
+
     else:
         reply.reply_message(event, "エラー")
