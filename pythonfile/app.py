@@ -68,10 +68,11 @@ def handle_message(event):
             reply.reply_message(event, "ないよ！！")
         case "お問い合わせ":
             reply.reply_message(event, "こちらのメールアドレスまで！\n○○○○@○○")
-        case _:
-            #reply.reply_message(event, "レシピと送信してね！")
+        case "登録":
             #line_bot_api.broadcast(TextSendMessage(text=event.message.text))
             pass
+        case _:
+            reply.reply_message(event, "レシピと送信してね！")
 
 #作る！を押した後
 @handler.add(PostbackEvent)
