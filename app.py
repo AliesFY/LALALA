@@ -14,8 +14,8 @@ from linebot.models import (
     MessageAction,URIAction,PostbackEvent,
 )
 
-from select_likes import choice_taste
-import richmenu, reply, testcount,postbacklist
+#from pythonfile.select_likes import choice_taste
+from pythonfile import richmenu, reply, testcount,postbacklist,namedec
 
 
 
@@ -27,7 +27,7 @@ handler = WebhookHandler('33c053fe8f9f91cb370128a7f77f95e5')
 count = 0
 
 #FlexMessageのjsonの読み込み
-f = open(r'../json/testFlex.json', 'r',encoding='utf-8')
+f = open(r'json/testFlex.json', 'r',encoding='utf-8')
 flex_message_json_dict = json.load(f)
 
 #Richmenuの読み込み
@@ -54,25 +54,38 @@ def callback():
 #レシピ送信用
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    match event.message.text:
-        case "レシピ":
-            line_bot_api.reply_message(
-                event.reply_token,
-                FlexSendMessage(
-                    alt_text='ホールケーキ、シュークリーム、ティラミス',
-                    #contentsパラメタに, dict型の値を渡す
-                    contents=flex_message_json_dict
+    if testcount.name_count == 0:
+        match event.message.text:
+            case "レシピ":
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    FlexSendMessage(
+                        alt_text='ホールケーキ、シュークリーム、ティラミス',
+                        #contentsパラメタに, dict型の値を渡す
+                        contents=flex_message_json_dict
+                    )
                 )
-            )
-        case "クーポン":
-            reply.reply_message(event, "ないよ！！")
-        case "お問い合わせ":
-            reply.reply_message(event, "こちらのメールアドレスまで！\n○○○○@○○")
-        case "登録":
-            #line_bot_api.broadcast(TextSendMessage(text=event.message.text))
-            pass
-        case _:
-            reply.reply_message(event, "レシピと送信してね！")
+            case "クーポン":
+                reply.reply_message(event, "ないよ！！")
+            case "お問い合わせ":
+                reply.reply_message(event, "こちらのメールアドレスまで！\n○○○○@○○")
+            case "登録":
+                namedec.nameregister(event)
+                #line_bot_api.broadcast(TextSendMessage(text=event.message.text))
+            case _:
+                reply.reply_message(event, "レシピと送信してね！\n登録と送信するとみんなになにかいうことができるよ！！")
+                #print(event.source.user_id)
+    elif testcount.name_count == 1:
+        namedec.nameregister(event)
+    elif testcount.name_count == 2:
+        if namedec.user == event.source.user_id:
+            if event.message.text == "解除":
+                reply.reply_message(event, "解除しました\n通常モードに戻ります")
+                testcount.name_count = 0
+            else:
+                line_bot_api.broadcast(TextSendMessage(text=namedec.name + "様からのご通達\n" + event.message.text))
+        else:
+            reply.reply_message(event, "使用中")
 
 #作る！を押した後
 @handler.add(PostbackEvent)
