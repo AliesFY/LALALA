@@ -14,6 +14,6 @@ handler = WebhookHandler('33c053fe8f9f91cb370128a7f77f95e5')
 
 def holecake():
     testcount.select_count = 0
-    with open("./holecake.txt",'r', encoding='UTF-8') as h:
+    with open("../holecake.txt",'r', encoding='UTF-8') as h:
         s = h.read()
         return s

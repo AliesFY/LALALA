@@ -27,7 +27,7 @@ handler = WebhookHandler('33c053fe8f9f91cb370128a7f77f95e5')
 count = 0
 
 #FlexMessageのjsonの読み込み
-f = open(r'json/testFlex.json', 'r',encoding='utf-8')
+f = open(r'../json/testFlex.json', 'r',encoding='utf-8')
 flex_message_json_dict = json.load(f)
 
 #Richmenuの読み込み
