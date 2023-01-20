@@ -32,3 +32,13 @@ def reply_stanp(event):
     line_bot_api.reply_message(
         event.reply_token,sticker_messagetest
     )
+
+def push_sakura(message):
+    userid = "U2bdc11c13e81f999b6ac23e366eec1ce"
+    line_bot_api.push_message(
+        userid,
+        TextSendMessage(
+            text=message
+        )
+
+    )

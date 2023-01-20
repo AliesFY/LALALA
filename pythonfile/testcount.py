@@ -8,4 +8,5 @@ amount_count = 0
 select_count = 0
 #初回名前登録時カウント
 name_count = 0
-#一人しか使えないように
+#サクラカウント
+sakura_count = 0

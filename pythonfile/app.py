@@ -54,7 +54,7 @@ def callback():
 #レシピ送信用
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    if testcount.name_count == 0:
+    if testcount.name_count == 0 and testcount.sakura_count == 0:
         if event.message.text == "レシピ":
                 line_bot_api.reply_message(
                     event.reply_token,
@@ -71,6 +71,8 @@ def handle_message(event):
         elif event.message.text == "登録":
                 namedec.nameregister(event)
                 #line_bot_api.broadcast(TextSendMessage(text=event.message.text))
+        elif event.message.text == "さくら":
+                namedec.sakurapush(event)
         else:
                 reply.reply_message(event, "レシピと送信してね！\n登録と送信するとみんなになにかいうことができるよ！！")
                 #print(event.source.user_id)
@@ -85,6 +87,14 @@ def handle_message(event):
                 line_bot_api.broadcast(TextSendMessage(text=namedec.name + "様からのご通達\n" + event.message.text))
         else:
             reply.reply_message(event, "使用中")
+    elif testcount.sakura_count ==1 :
+        if event.message.text == "解除":
+            reply.reply_message(event, "解除しました\n通常モードに戻ります")
+            testcount.sakura_count = 0
+        elif event.source.user_id == "U2bdc11c13e81f999b6ac23e366eec1ce":
+            line_bot_api.push_message(namedec.user,TextMessage(texe=event.message.text))
+        else:
+            namedec.sakurapush(event)
 
 #作る！を押した後
 @handler.add(PostbackEvent)
