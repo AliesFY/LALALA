@@ -15,7 +15,7 @@ from linebot.models import (
 )
 
 #from pythonfile.select_likes import choice_taste
-from pythonfile import richmenu, reply, testcount,postbacklist,namedec
+import richmenu, reply, testcount,postbacklist,namedec
 
 
 

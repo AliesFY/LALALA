@@ -6,7 +6,7 @@ from linebot.exceptions import (
 )
 from linebot.models import (ButtonsTemplate, PostbackAction, TemplateSendMessage)
 
-from . import testcount
+import testcount
 
 
 

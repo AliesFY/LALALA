@@ -1,4 +1,4 @@
-from . import testcount,reply
+import testcount,reply
 
 def nameregister(event):
     if testcount.name_count == 0:
