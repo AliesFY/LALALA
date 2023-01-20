@@ -15,19 +15,18 @@ def postbacksec(event):
     post_data = event.postback.data
     if testcount.select_count == 0:
         if post_data == "ホールケーキ" or post_data == "シュークリーム" or post_data == "ティラミス":
-            match post_data:
-                case "ホールケーキ":
-                    select_ho = select_likes.choice_taste("ホールケーキ")
-                    select_ho.select1(event)
-                    testcount.recipi_count = select_ho
-                case "シュークリーム":
-                    select_syu = select_likes.choice_taste("シュークリーム")
-                    select_syu.select1(event)
-                    testcount.recipi_count = select_syu
-                case  "ティラミス":
-                    select_thi = select_likes.choice_taste("ティラミス")
-                    select_thi.select1(event)
-                    testcount.recipi_count = select_thi
+            if post_data == "ホールケーキ":
+                select_ho = select_likes.choice_taste("ホールケーキ")
+                select_ho.select1(event)
+                testcount.recipi_count = select_ho
+            elif post_data == "シュークリーム":
+                select_syu = select_likes.choice_taste("シュークリーム")
+                select_syu.select1(event)
+                testcount.recipi_count = select_syu
+            elif post_data== "ティラミス":
+                select_thi = select_likes.choice_taste("ティラミス")
+                select_thi.select1(event)
+                testcount.recipi_count = select_thi
         else:
             reply.reply_message(event, "ざんねんエラーです(´；ω；`)\nもう一度レシピから選択してね！")
     elif testcount.select_count == 1:
@@ -35,34 +34,31 @@ def postbacksec(event):
             testcount.select_count = 0
             reply.reply_message(event, "ざんねんエラーです(´；ω；`)\nもう一度レシピから選択してね！")
         else:
-            match post_data:
-                case "激アマ":
-                    testcount.recipi_count.select2(event)
-                    testcount.sweet_count = 0
-                case "甘め":
-                    testcount.recipi_count.select2(event)
-                    testcount.sweet_count = 1
-                case"甘さ控えめ":
-                    testcount.recipi_count.select2(event)
-                    testcount.sweet_count = 2
+            if post_data == "激アマ":
+                testcount.recipi_count.select2(event)
+                testcount.sweet_count = 0
+            elif post_data == "甘め":
+                testcount.recipi_count.select2(event)
+                testcount.sweet_count = 1
+            elif post_data == "甘さ控えめ":
+                testcount.recipi_count.select2(event)
+                testcount.sweet_count = 2
 
-            match post_data:
-                case "1":
-                    testcount.amount_count = 0
-                    testcount.recipi_count.result(event)
-                case "2":
-                    testcount.amount_count = 1
-                    testcount.recipi_count.result(event)
-                case "3":
-                    testcount.amount_count = 2
-                    testcount.recipi_count.result(event)
+            elif post_data == "1":
+                testcount.amount_count = 0
+                testcount.recipi_count.result(event)
+            elif post_data == "2":
+                testcount.amount_count = 1
+                testcount.recipi_count.result(event)
+            elif post_data == "3":
+                testcount.amount_count = 2
+                testcount.recipi_count.result(event)
 
-            match post_data:
-                case "いいよ！":
-                    reply.reply_message(event, recipi.holecake())
-                case "やり直す":
-                    testcount.select_count = 0
-                    reply.reply_message(event, "OK(*^-^*)\nもう一度レシピから選択してね！")
+            elif post_data == "いいよ！":
+                reply.reply_message(event, recipi.holecake())
+            elif post_data == "やり直す":
+                testcount.select_count = 0
+                reply.reply_message(event, "OK(*^-^*)\nもう一度レシピから選択してね！")
 
     else:
         reply.reply_message(event, "エラー")

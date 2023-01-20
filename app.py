@@ -55,8 +55,7 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     if testcount.name_count == 0:
-        match event.message.text:
-            case "レシピ":
+        if event.message.text == "レシピ":
                 line_bot_api.reply_message(
                     event.reply_token,
                     FlexSendMessage(
@@ -65,14 +64,14 @@ def handle_message(event):
                         contents=flex_message_json_dict
                     )
                 )
-            case "クーポン":
+        elif event.message.text =="クーポン":
                 reply.reply_message(event, "ないよ！！")
-            case "お問い合わせ":
+        elif event.message.text == "お問い合わせ":
                 reply.reply_message(event, "こちらのメールアドレスまで！\n○○○○@○○")
-            case "登録":
+        elif event.message.text == "登録":
                 namedec.nameregister(event)
                 #line_bot_api.broadcast(TextSendMessage(text=event.message.text))
-            case _:
+        else:
                 reply.reply_message(event, "レシピと送信してね！\n登録と送信するとみんなになにかいうことができるよ！！")
                 #print(event.source.user_id)
     elif testcount.name_count == 1:
@@ -114,4 +113,5 @@ if __name__ == "__main__":
 
 #実行コマンド↓
 #flask run --debugger --reload
+
 #さくらID　U2bdc11c13e81f999b6ac23e366eec1ce
