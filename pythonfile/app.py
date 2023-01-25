@@ -92,7 +92,7 @@ def handle_message(event):
             reply.reply_message(event, "解除しました\n通常モードに戻ります")
             testcount.sakura_count = 0
         elif event.source.user_id == "U2bdc11c13e81f999b6ac23e366eec1ce":
-            line_bot_api.push_message(namedec.user,TextMessage(texe=event.message.text))
+            line_bot_api.push_message(namedec.user,TextSendMessage(text=event.message.text))
         else:
             namedec.sakurapush(event)
 
