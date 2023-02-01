@@ -24,6 +24,7 @@ def postbacksec(event):
                 select_cho = select_likes.choice_taste("チョコレートケーキ")
                 select_cho.select1(event)
                 testcount.recipi_count = select_cho
+                testcount.recipi_txt = recipi.chococake
             elif post_data== "ティラミス":
                 select_thi = select_likes.choice_taste("ティラミス")
                 select_thi.select1(event)
