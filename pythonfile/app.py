@@ -59,7 +59,7 @@ def handle_message(event):
                 line_bot_api.reply_message(
                     event.reply_token,
                     FlexSendMessage(
-                        alt_text='ホールケーキ、シュークリーム、ティラミス',
+                        alt_text='ホールケーキ、チョコレートケーキ、ティラミス',
                         #contentsパラメタに, dict型の値を渡す
                         contents=flex_message_json_dict
                     )
