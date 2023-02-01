@@ -10,3 +10,5 @@ select_count = 0
 name_count = 0
 #サクラカウント
 sakura_count = 0
+#レイシぴ表示変数
+recipi_txt = 0
