@@ -18,6 +18,7 @@ def postbacksec(event):
                 select_ho = select_likes.choice_taste("ホールケーキ")
                 select_ho.select1(event)
                 testcount.recipi_count = select_ho
+                recipi_txt = recipi.holecake
             elif post_data == "シュークリーム":
                 select_syu = select_likes.choice_taste("シュークリーム")
                 select_syu.select1(event)
@@ -26,6 +27,7 @@ def postbacksec(event):
                 select_thi = select_likes.choice_taste("ティラミス")
                 select_thi.select1(event)
                 testcount.recipi_count = select_thi
+                recipi_txt = recipi.thiramisu
         else:
             reply.reply_message(event, "ざんねんエラーです(´；ω；`)\nもう一度レシピから選択してね！")
     elif testcount.select_count == 1:
@@ -54,7 +56,7 @@ def postbacksec(event):
                 testcount.recipi_count.result(event)
 
             elif post_data == "いいよ！":
-                reply.reply_message(event, recipi.holecake())
+                reply.reply_message(event, recipi_txt())
             elif post_data == "やり直す":
                 testcount.select_count = 0
                 reply.reply_message(event, "OK(*^-^*)\nもう一度レシピから選択してね！")
