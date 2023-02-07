@@ -11,4 +11,6 @@ name_count = 0
 #サクラカウント
 sakura_count = 0
 #レイシぴ表示変数
-recipi_txt = 0
+recipi_kind = 0
+#ドリンク選択
+drink_count = 0

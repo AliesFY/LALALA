@@ -15,7 +15,7 @@ from linebot.models import (
 )
 
 #from pythonfile.select_likes import choice_taste
-import richmenu, reply, testcount,postbacklist,namedec
+import richmenu, reply, testcount,postbacklist,namedec,select_likes,recipi
 
 
 
@@ -28,14 +28,16 @@ count = 0
 
 #FlexMessageのjsonの読み込み
 f = open(r'../json/testFlex.json', 'r',encoding='utf-8')
+g = open(r'../json/rolecake.json', 'r',encoding='utf-8')
+h = open(r'../json/chococake.json', 'r',encoding='utf-8')
+i = open(r'../json/thiramisu.json', 'r',encoding='utf-8')
 flex_message_json_dict = json.load(f)
+flex_message_ro = json.load(g)
+flex_message_cho = json.load(h)
+flex_message_thi = json.load(i)
 
 #Richmenuの読み込み
-rich_menu_list = line_bot_api.get_rich_menu_list()
-if not rich_menu_list:
-    result = richmenu.createRichmeu()
-    if not result:
-        print("失敗")
+richmenu.init_menu()
 
 # いじらない
 @app.route("/callback", methods=['POST'])
@@ -59,13 +61,27 @@ def handle_message(event):
                 line_bot_api.reply_message(
                     event.reply_token,
                     FlexSendMessage(
-                        alt_text='ホールケーキ、チョコレートケーキ、ティラミス',
+                        alt_text='ロールケーキ、チョコレートケーキ、ティラミス',
                         #contentsパラメタに, dict型の値を渡す
                         contents=flex_message_json_dict
                     )
                 )
-        elif event.message.text =="クーポン":
-                reply.reply_message(event, "ないよ！！")
+        elif event.message.text =="ドリンク":
+            testcount.drink_count = 1
+            select_likes.drink(event)
+        elif event.message.text =="ジュース":
+            testcount.drink_count = 0
+            reply.flex(event,flex_message_ro)
+        elif event.message.text =="コーヒー":
+            testcount.drink_count = 0
+            reply.flex(event,flex_message_thi)
+        elif event.message.text =="紅茶":
+            testcount.drink_count = 0
+            reply.flex(event,flex_message_json_dict)
+        elif event.message.text =="ワイン":
+            testcount.drink_count = 0
+            reply.flex(event,flex_message_cho)
+        
         elif event.message.text == "お問い合わせ":
                 reply.reply_message(event, "こちらのメールアドレスまで！\n○○○○@○○")
         elif event.message.text == "登録":

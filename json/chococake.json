@@ -1,0 +1,100 @@
+{
+    "type": "bubble",
+    "size": "micro",
+    "hero": {
+        "type": "image",
+        "url": "https://msp.c.yimg.jp/images/v2/FUTi93tXq405grZVGgDqG_lQufos-CE0emFoqQyuDO_MI5Pe7_AyMWFH9tY0WpHo0TEcRAxMagWzjlJqFnhIpmlPuup7o2js5a7EtdFkLGIPuFQTFkXvV7C4QHC-JIUcpxk6TduD-mOLk-MSssURZrmWnhkYoHDRX1J6n_7qje1yXs7jlN5lqDjAfuj7GieH2RV-xR6AtIptG8jET0uCt5sBSPXp0b4VHwqLlBIXAbHQomabBWcyvBLy7vbll28tHS4nZ-nepJ8Kp9g0MwTsxAUQGcDjY1jLM1YvQDlnH4M=/publicdomainq-0018767yff.jpg",
+        "size": "full",
+        "aspectMode": "cover",
+        "aspectRatio": "320:213"
+    },
+    "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+            {
+                "type": "text",
+                "text": "チョコレートケーキ",
+                "weight": "bold",
+                "size": "sm",
+                "wrap": true
+            },
+            {
+                "type": "box",
+                "layout": "baseline",
+                "contents": [
+                    {
+                        "type": "icon",
+                        "size": "xs",
+                        "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+                    },
+                    {
+                        "type": "icon",
+                        "size": "xs",
+                        "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+                    },
+                    {
+                        "type": "icon",
+                        "size": "xs",
+                        "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+                    },
+                    {
+                        "type": "icon",
+                        "size": "xs",
+                        "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+                    },
+                    {
+                        "type": "icon",
+                        "size": "xs",
+                        "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gray_star_28.png"
+                    },
+                    {
+                        "type": "text",
+                        "text": "難易度4.0",
+                        "size": "sm",
+                        "color": "#8c8c8c",
+                        "margin": "md",
+                        "flex": 0
+                    }
+                ]
+            },
+            {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                    {
+                        "type": "box",
+                        "layout": "baseline",
+                        "spacing": "sm",
+                        "contents": [
+                            {
+                                "type": "text",
+                                "text": "美味しいよ",
+                                "wrap": true,
+                                "color": "#8c8c8c",
+                                "size": "xs",
+                                "flex": 5
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "spacing": "sm",
+        "paddingAll": "13px"
+    },
+    "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+            {
+                "type": "button",
+                "action": {
+                    "type": "postback",
+                    "label": "作る！！！",
+                    "data": "チョコレートケーキ"
+                }
+            }
+        ]
+    }
+}

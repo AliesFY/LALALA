@@ -1,0 +1,99 @@
+{
+    "type": "bubble",
+    "size": "micro",
+    "hero": {
+        "type": "image",
+        "url": "https://media.istockphoto.com/id/1287210263/ja/%E3%82%B9%E3%83%88%E3%83%83%E3%82%AF%E3%83%95%E3%82%A9%E3%83%88/%E3%83%86%E3%82%A3%E3%83%A9%E3%83%9F%E3%82%B9-%E3%82%B3%E3%83%BC%E3%83%92%E3%83%BC%E9%A2%A8%E5%91%B3%E3%81%AE%E3%82%A4%E3%82%BF%E3%83%AA%E3%82%A2%E3%83%B3%E3%83%87%E3%82%B6%E3%83%BC%E3%83%88.jpg?b=1&s=170667a&w=0&k=20&c=JeQlWvBn9e-WqdIQdnI0y6RU-YF4l-oL6Dy9aSGyY7A=",
+        "size": "full",
+        "aspectMode": "cover",
+        "aspectRatio": "320:213"
+    },
+    "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+            {
+                "type": "text",
+                "text": "ティラミス",
+                "weight": "bold",
+                "size": "sm"
+            },
+            {
+                "type": "box",
+                "layout": "baseline",
+                "contents": [
+                    {
+                        "type": "icon",
+                        "size": "xs",
+                        "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+                    },
+                    {
+                        "type": "icon",
+                        "size": "xs",
+                        "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+                    },
+                    {
+                        "type": "icon",
+                        "size": "xs",
+                        "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+                    },
+                    {
+                        "type": "icon",
+                        "size": "xs",
+                        "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+                    },
+                    {
+                        "type": "icon",
+                        "size": "xs",
+                        "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gray_star_28.png"
+                    },
+                    {
+                        "type": "text",
+                        "text": "難易度4.0",
+                        "size": "sm",
+                        "color": "#8c8c8c",
+                        "margin": "md",
+                        "flex": 0
+                    }
+                ]
+            },
+            {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                    {
+                        "type": "box",
+                        "layout": "baseline",
+                        "spacing": "sm",
+                        "contents": [
+                            {
+                                "type": "text",
+                                "text": "美味しいよ",
+                                "wrap": true,
+                                "color": "#8c8c8c",
+                                "size": "xs",
+                                "flex": 5
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "spacing": "sm",
+        "paddingAll": "13px"
+    },
+    "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+            {
+                "type": "button",
+                "action": {
+                    "type": "postback",
+                    "label": "作る！！！",
+                    "data": "ティラミス"
+                }
+            }
+        ]
+    }
+}

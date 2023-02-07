@@ -7,7 +7,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,StickerSendMessage
+    MessageEvent, TextMessage, TextSendMessage,StickerSendMessage,FlexSendMessage
 )
 
 
@@ -31,6 +31,16 @@ def reply_stanp(event):
     )
     line_bot_api.reply_message(
         event.reply_token,sticker_messagetest
+    )
+
+def flex(event, flexcont):
+    line_bot_api.reply_message(
+        event.reply_token,
+        FlexSendMessage(
+            alt_text='ロールケーキ、チョコレートケーキ、ティラミス',
+            #contentsパラメタに, dict型の値を渡す
+            contents=flexcont
+        )
     )
 
 def push_sakura(message):

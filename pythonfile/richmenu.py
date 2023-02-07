@@ -7,8 +7,11 @@ from linebot.exceptions import (
 from linebot.models import (
     RichMenu, RichMenuSize, RichMenuArea, RichMenuBounds, MessageAction, PostbackTemplateAction
 )
+line_bot_api = LineBotApi('g40p1VQDlWGVMHyMd7pL2kZXGj/Qxx0g35zTCf7+NhIN/cUm/8aQLAYzMoTsaY/cRPbLHl1jW+mSy2Xy9N+hKtYgLVrPtNFCBECy61Pzfvp4j1gxY/C4LoKe46fzT1shWO08PkQxz3Up0MBnk9910QdB04t89/1O/w1cDnyilFU=')
+handler = WebhookHandler('33c053fe8f9f91cb370128a7f77f95e5')
 
-def init_menu(line_bot_api):
+
+def init_menu():
     rich_menu_to_create = RichMenu(
                 size = RichMenuSize(width=1598, height=540),
                 selected = True,
@@ -21,7 +24,7 @@ def init_menu(line_bot_api):
                     ),
                     RichMenuArea(
                         bounds=RichMenuBounds(x=533, y=0, width=533, height=540),
-                        action=MessageAction(text="クーポン")
+                        action=MessageAction(text="ドリンク")
                     ),
                     RichMenuArea(
                         bounds=RichMenuBounds(x=1066, y=0, width=533, height=540),
@@ -34,7 +37,7 @@ def init_menu(line_bot_api):
 
     # RichMenu用の画像
 
-    path = r"../image/eeyan22.png"
+    path = r"../image/richmenu.png"
 
     # 画像をRichMenuに指定
     with open(path, 'rb') as f:

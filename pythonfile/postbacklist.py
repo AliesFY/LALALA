@@ -1,3 +1,4 @@
+import json
 from linebot import (
     LineBotApi, WebhookHandler
 )
@@ -11,29 +12,31 @@ line_bot_api = LineBotApi('g40p1VQDlWGVMHyMd7pL2kZXGj/Qxx0g35zTCf7+NhIN/cUm/8aQL
 handler = WebhookHandler('33c053fe8f9f91cb370128a7f77f95e5')
 
 
+
+
 def postbacksec(event):
     post_data = event.postback.data
     if testcount.select_count == 0:
-        if post_data == "ホールケーキ" or post_data == "チョコレートケーキ" or post_data == "ティラミス":
-            if post_data == "ホールケーキ":
-                select_ho = select_likes.choice_taste("ホールケーキ")
+        if post_data == "ロールケーキ" or post_data == "チョコレートケーキ" or post_data == "ティラミス":
+            if post_data == "ロールケーキ":
+                select_ho = select_likes.choice_taste("ロールケーキ")
                 select_ho.select1(event)
                 testcount.recipi_count = select_ho
-                testcount.recipi_txt = recipi.holecake
+                testcount.recipi_kind = recipi.holecake
             elif post_data == "チョコレートケーキ":
                 select_cho = select_likes.choice_taste("チョコレートケーキ")
                 select_cho.select1(event)
                 testcount.recipi_count = select_cho
-                testcount.recipi_txt = recipi.chococake
+                testcount.recipi_kind = recipi.chococake
             elif post_data== "ティラミス":
                 select_thi = select_likes.choice_taste("ティラミス")
                 select_thi.select1(event)
                 testcount.recipi_count = select_thi
-                testcount.recipi_txt = recipi.thiramisu
+                testcount.recipi_kind = recipi.thiramisu
         else:
             reply.reply_message(event, "ざんねんエラーです(´；ω；`)\nもう一度レシピから選択してね！")
     elif testcount.select_count == 1:
-        if post_data == "ホールケーキ" or post_data == "チョコレートケーキ" or post_data == "ティラミス":
+        if post_data == "ロールケーキ" or post_data == "チョコレートケーキ" or post_data == "ティラミス":
             testcount.select_count = 0
             reply.reply_message(event, "ざんねんエラーです(´；ω；`)\nもう一度レシピから選択してね！")
         else:
@@ -58,7 +61,7 @@ def postbacksec(event):
                 testcount.recipi_count.result(event)
 
             elif post_data == "いいよ！":
-                reply.reply_message(event, testcount.recipi_txt())
+                reply.reply_message(event, testcount.recipi_kind())
             elif post_data == "やり直す":
                 testcount.select_count = 0
                 reply.reply_message(event, "OK(*^-^*)\nもう一度レシピから選択してね！")

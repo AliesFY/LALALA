@@ -4,9 +4,9 @@ from linebot import (
 from linebot.exceptions import (
     InvalidSignatureError
 )
-from linebot.models import (ButtonsTemplate, PostbackAction, TemplateSendMessage)
+from linebot.models import (ButtonsTemplate, PostbackAction, TemplateSendMessage,MessageAction)
 
-import testcount
+import testcount, reply
 
 
 
@@ -54,3 +54,16 @@ class choice_taste:
         template_message = TemplateSendMessage(
             alt_text='最終確認', template=buttons_template)
         return line_bot_api.reply_message(event.reply_token, template_message)
+
+
+def drink(event):
+    buttons_template = ButtonsTemplate(
+                title="飲み物に合わせたオススメを表示するよ", text="今の気分は？", actions=[
+                    MessageAction(label = "ジュース",text="ジュース"),
+                    MessageAction(label = "コーヒー",text="コーヒー"),
+                    MessageAction(label = "紅茶",text="紅茶"),
+                    MessageAction(label = "ワイン",text="ワイン"),
+            ])
+    template_message = TemplateSendMessage(
+        alt_text='飲み物を選んでね', template=buttons_template)
+    return line_bot_api.reply_message(event.reply_token, template_message)
