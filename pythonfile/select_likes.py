@@ -13,7 +13,7 @@ import testcount, reply
 line_bot_api = LineBotApi('g40p1VQDlWGVMHyMd7pL2kZXGj/Qxx0g35zTCf7+NhIN/cUm/8aQLAYzMoTsaY/cRPbLHl1jW+mSy2Xy9N+hKtYgLVrPtNFCBECy61Pzfvp4j1gxY/C4LoKe46fzT1shWO08PkQxz3Up0MBnk9910QdB04t89/1O/w1cDnyilFU=')
 handler = WebhookHandler('33c053fe8f9f91cb370128a7f77f95e5')
 taste_flevor = ["激アマ", "甘め", "甘さ控えめ"]
-people_count = ["1人分", "2人分", "3人分"]
+people_count = ["濃いめ", "普通"]
 finalans = ["いいよ！", "やり直す"]
 
 class choice_taste:
@@ -35,13 +35,12 @@ class choice_taste:
 
     def select2(self, event):
         buttons_template = ButtonsTemplate(
-                    title='なん人分作るか教えてね!', text='わくわく( *´艸｀)', actions=[
-                        PostbackAction(label='1人分', data='1'),
-                        PostbackAction(label='2人分', data='2'),
-                        PostbackAction(label='3人分', data='3')
+                    title='生地の濃さを選んでね！', text='あなたの好みは？', actions=[
+                        PostbackAction(label='濃いめ', data='濃いめ'),
+                        PostbackAction(label='普通', data='普通')
                 ])
         template_message = TemplateSendMessage(
-            alt_text='何人分か選んでね', template=buttons_template)
+            alt_text='生地の濃さを選んでね！', template=buttons_template)
         return line_bot_api.reply_message(event.reply_token, template_message)
 
     def result(self, event):
@@ -61,7 +60,7 @@ def drink(event):
                 title="飲み物に合わせたオススメを表示するよ", text="今の気分は？", actions=[
                     MessageAction(label = "ジュース",text="ジュース"),
                     MessageAction(label = "コーヒー",text="コーヒー"),
-                    MessageAction(label = "紅茶",text="紅茶"),
+                    MessageAction(label = "緑茶",text="緑茶"),
                     MessageAction(label = "ワイン",text="ワイン"),
             ])
     template_message = TemplateSendMessage(

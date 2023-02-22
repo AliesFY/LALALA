@@ -65,3 +65,81 @@ def thiramisu():
     with open("../recipi_txt/thiramisu.txt.bak",'w', encoding='UTF-8') as h:
         h.write(s)
     return s
+
+
+
+sho_guranyu1 = ["120", "100", "85"]
+sho_guranyu2 = ["40", "30", "20"]
+sho_egg = ["2", "1"]
+sho_butter =["35", "30"]
+def shortcake():
+    testcount.select_count = 0
+    file_name = "../recipi_txt/shortcake.txt"
+    back_name = file_name + ".bak"
+    shutil.copy(file_name,back_name)
+
+    with open("../recipi_txt/shortcake.txt",'r', encoding='UTF-8') as h:
+        s = h.read()
+
+    s = s.replace("guranyu1", sho_guranyu1[testcount.sweet_count]).replace("guranyu2", sho_guranyu2[testcount.sweet_count]).replace("egg", sho_egg[testcount.amount_count]).replace("butter", sho_butter[testcount.amount_count]).replace("sweet", sweet_all[testcount.sweet_count])
+    with open("../recipi_txt/chortcake.txt.bak",'w', encoding='UTF-8') as h:
+        h.write(s)
+    return s
+
+
+
+po_sugar = ["140", "120", "100"]
+po_egg = ["3", "2"]
+po_vanilla = ["5", "3"]
+def poundcake():
+    testcount.select_count = 0
+    file_name = "../recipi_txt/poundcake.txt"
+    back_name = file_name + ".bak"
+    shutil.copy(file_name,back_name)
+
+    with open("../recipi_txt/poundcake.txt",'r', encoding='UTF-8') as h:
+        s = h.read()
+
+    s = s.replace("sugar", po_sugar[testcount.sweet_count]).replace("egg", po_egg[testcount.amount_count]).replace("vanilla", po_vanilla[testcount.amount_count]).replace("sweet", sweet_all[testcount.sweet_count])
+    with open("../recipi_txt/poundcake.txt.bak",'w', encoding='UTF-8') as h:
+        h.write(s)
+    return s
+
+
+
+
+ga_guranyu1 = ["60", "40", "30"]
+ga_guranyu2 = ["40", "40", "34"]
+def gateauchocolat():
+    testcount.select_count = 0
+    file_name = "../recipi_txt/Gateau chocolat.txt"
+    back_name = file_name + ".bak"
+    shutil.copy(file_name,back_name)
+
+    with open("../recipi_txt/Gateau chocolat.txt",'r', encoding='UTF-8') as h:
+        s = h.read()
+
+    s = s.replace("guranyu1", ga_guranyu1[testcount.sweet_count]).replace("guranyu2", ga_guranyu2[testcount.sweet_count]).replace("sweet", sweet_all[testcount.sweet_count])
+    with open("../recipi_txt/Gateau chocolat.txt.bak",'w', encoding='UTF-8') as h:
+        h.write(s)
+    return s
+
+
+
+ca_sugar = ["125", "100", "85"]
+ca_honey = ["3", "2", "2"]
+ca_egg = ["5", "4"]
+def castella():
+    testcount.select_count = 0
+    file_name = "../recipi_txt/castella.txt"
+    back_name = file_name + ".bak"
+    shutil.copy(file_name,back_name)
+
+    with open("../recipi_txt/castella.txt",'r', encoding='UTF-8') as h:
+        s = h.read()
+
+    s = s.replace("sugar", ca_sugar[testcount.sweet_count]).replace("honey", ca_honey[testcount.sweet_count]).replace("egg", ca_egg[testcount.amount_count]).replace("sweet", sweet_all[testcount.sweet_count])
+    with open("../recipi_txt/castella.txt.bak",'w', encoding='UTF-8') as h:
+        h.write(s)
+    return s
+

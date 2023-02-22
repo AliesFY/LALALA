@@ -15,7 +15,7 @@ from linebot.models import (
 )
 
 #from pythonfile.select_likes import choice_taste
-import richmenu, reply, testcount,postbacklist,namedec,select_likes,recipi
+import richmenu, reply, testcount,postbacklist,select_likes,recipi
 
 
 
@@ -28,14 +28,16 @@ count = 0
 
 #FlexMessageのjsonの読み込み
 f = open(r'../json/testFlex.json', 'r',encoding='utf-8')
-g = open(r'../json/rolecake.json', 'r',encoding='utf-8')
-h = open(r'../json/chococake.json', 'r',encoding='utf-8')
-i = open(r'../json/thiramisu.json', 'r',encoding='utf-8')
-flex_message_json_dict = json.load(f)
-flex_message_ro = json.load(g)
-flex_message_cho = json.load(h)
-flex_message_thi = json.load(i)
+g = open(r'../json/coffee.json', 'r',encoding='utf-8')
+h = open(r'../json/greentea.json', 'r',encoding='utf-8')
+i = open(r'../json/juice.json', 'r',encoding='utf-8')
+j = open(r'../json/wain.json', 'r',encoding='utf-8')
 
+flex_message_json_dict = json.load(f)
+flex_message_coffee = json.load(g)
+flex_message_greentea = json.load(h)
+flex_message_juice = json.load(i)
+flex_message_wain = json.load(j)
 #Richmenuの読み込み
 richmenu.init_menu()
 
@@ -56,61 +58,37 @@ def callback():
 #レシピ送信用
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    if testcount.name_count == 0 and testcount.sakura_count == 0:
-        if event.message.text == "レシピ":
-                line_bot_api.reply_message(
-                    event.reply_token,
-                    FlexSendMessage(
-                        alt_text='ロールケーキ、チョコレートケーキ、ティラミス',
-                        #contentsパラメタに, dict型の値を渡す
-                        contents=flex_message_json_dict
-                    )
+    if event.message.text == "レシピ":
+            line_bot_api.reply_message(
+                event.reply_token,
+                FlexSendMessage(
+                    alt_text='ロールケーキ、チョコレートケーキ、ティラミス、ショートケーキ、パウンドケーキ、ガトーショコラ、カステラ',
+                    #contentsパラメタに, dict型の値を渡す
+                    contents=flex_message_json_dict
                 )
-        elif event.message.text =="ドリンク":
-            testcount.drink_count = 1
-            select_likes.drink(event)
-        elif event.message.text =="ジュース":
-            testcount.drink_count = 0
-            reply.flex(event,flex_message_ro)
-        elif event.message.text =="コーヒー":
-            testcount.drink_count = 0
-            reply.flex(event,flex_message_thi)
-        elif event.message.text =="紅茶":
-            testcount.drink_count = 0
-            reply.flex(event,flex_message_json_dict)
-        elif event.message.text =="ワイン":
-            testcount.drink_count = 0
-            reply.flex(event,flex_message_cho)
-        
-        elif event.message.text == "お問い合わせ":
-                reply.reply_message(event, "こちらのメールアドレスまで！\n○○○○@○○")
-        elif event.message.text == "登録":
-                namedec.nameregister(event)
-                #line_bot_api.broadcast(TextSendMessage(text=event.message.text))
-        elif event.message.text == "さくら":
-                namedec.sakurapush(event)
-        else:
-                reply.reply_message(event, "レシピと送信してね！\n登録と送信するとみんなになにかいうことができるよ！！")
-                #print(event.source.user_id)
-    elif testcount.name_count == 1:
-        namedec.nameregister(event)
-    elif testcount.name_count == 2:
-        if namedec.user == event.source.user_id:
-            if event.message.text == "解除":
-                reply.reply_message(event, "解除しました\n通常モードに戻ります")
-                testcount.name_count = 0
-            else:
-                line_bot_api.broadcast(TextSendMessage(text=namedec.name + "様からのご通達\n" + event.message.text))
-        else:
-            reply.reply_message(event, "使用中")
-    elif testcount.sakura_count ==1 :
-        if event.message.text == "解除":
-            reply.reply_message(event, "解除しました\n通常モードに戻ります")
-            testcount.sakura_count = 0
-        elif event.source.user_id == "U2bdc11c13e81f999b6ac23e366eec1ce":
-            line_bot_api.push_message(namedec.user,TextSendMessage(text=event.message.text))
-        else:
-            namedec.sakurapush(event)
+            )
+    elif event.message.text =="ドリンク":
+        testcount.drink_count = 1
+        select_likes.drink(event)
+    elif event.message.text =="ジュース":
+        testcount.drink_count = 0
+        reply.flex(event,flex_message_juice)
+    elif event.message.text =="コーヒー":
+        testcount.drink_count = 0
+        reply.flex(event,flex_message_coffee)
+    elif event.message.text =="緑茶":
+        testcount.drink_count = 0
+        reply.flex(event,flex_message_greentea)
+    elif event.message.text =="ワイン":
+        testcount.drink_count = 0
+        reply.flex(event,flex_message_wain)
+    
+    elif event.message.text == "お問い合わせ":
+            reply.reply_message(event, "こちらのメールアドレスまで！\n○○○○@○○")
+    else:
+            reply.reply_message(event, "レシピと送信してね！\n登録と送信するとみんなになにかいうことができるよ！！")
+            #print(event.source.user_id)
+
 
 #作る！を押した後
 @handler.add(PostbackEvent)
@@ -129,7 +107,7 @@ def handle_sticker_message(event):
 @handler.add(FollowEvent)
 def follow_message(event):
     if event.type == "follow":# フォロー時のみメッセージを送信
-        reply.reply_message(event, "フォローありがとうございます！\nレシピ一覧は'レシピ'で見れるよ!!")
+        reply.reply_message(event, "フォローありがとうございます！\nレシピ一覧は'レシピ'で見れます!\nよいお菓子ライフを!")
 
 
 if __name__ == "__main__":
@@ -139,5 +117,3 @@ if __name__ == "__main__":
 
 #実行コマンド↓
 #flask run --debugger --reload
-
-#さくらID　U2bdc11c13e81f999b6ac23e366eec1ce

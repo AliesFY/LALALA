@@ -17,7 +17,7 @@ handler = WebhookHandler('33c053fe8f9f91cb370128a7f77f95e5')
 def postbacksec(event):
     post_data = event.postback.data
     if testcount.select_count == 0:
-        if post_data == "ロールケーキ" or post_data == "チョコレートケーキ" or post_data == "ティラミス":
+        if post_data == "ロールケーキ" or post_data == "チョコレートケーキ" or post_data == "ティラミス" or post_data == "ショートケーキ" or post_data == "パウンドケーキ" or post_data == "ガトーショコラ" or post_data == "カステラ":
             if post_data == "ロールケーキ":
                 select_ho = select_likes.choice_taste("ロールケーキ")
                 select_ho.select1(event)
@@ -33,10 +33,30 @@ def postbacksec(event):
                 select_thi.select1(event)
                 testcount.recipi_count = select_thi
                 testcount.recipi_kind = recipi.thiramisu
+            elif post_data== "ショートケーキ":
+                select_sho = select_likes.choice_taste("ショートケーキ")
+                select_sho.select1(event)
+                testcount.recipi_count = select_sho
+                testcount.recipi_kind = recipi.shortcake
+            elif post_data== "パウンドケーキ":
+                select_po = select_likes.choice_taste("パウンドケーキ")
+                select_po.select1(event)
+                testcount.recipi_count = select_po
+                testcount.recipi_kind = recipi.poundcake
+            elif post_data== "ガトーショコラ":
+                select_ga = select_likes.choice_taste("ガトーショコラ")
+                select_ga.select1(event)
+                testcount.recipi_count = select_ga
+                testcount.recipi_kind = recipi.gateauchocolat
+            elif post_data== "カステラ":
+                select_ca = select_likes.choice_taste("カステラ")
+                select_ca.select1(event)
+                testcount.recipi_count = select_ca
+                testcount.recipi_kind = recipi.castella
         else:
             reply.reply_message(event, "ざんねんエラーです(´；ω；`)\nもう一度レシピから選択してね！")
     elif testcount.select_count == 1:
-        if post_data == "ロールケーキ" or post_data == "チョコレートケーキ" or post_data == "ティラミス":
+        if post_data == "ロールケーキ" or post_data == "チョコレートケーキ" or post_data == "ティラミス" or post_data == "ショートケーキ" or post_data == "パウンドケーキ" or post_data == "ガトーショコラ":
             testcount.select_count = 0
             reply.reply_message(event, "ざんねんエラーです(´；ω；`)\nもう一度レシピから選択してね！")
         else:
@@ -50,14 +70,11 @@ def postbacksec(event):
                 testcount.recipi_count.select2(event)
                 testcount.sweet_count = 2
 
-            elif post_data == "1":
+            elif post_data == "濃いめ":
                 testcount.amount_count = 0
                 testcount.recipi_count.result(event)
-            elif post_data == "2":
+            elif post_data == "普通":
                 testcount.amount_count = 1
-                testcount.recipi_count.result(event)
-            elif post_data == "3":
-                testcount.amount_count = 2
                 testcount.recipi_count.result(event)
 
             elif post_data == "いいよ！":
