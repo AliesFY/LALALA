@@ -29,20 +29,18 @@ count = 0
 
 #FlexMessageのjsonの読み込み
 f = open(r'../json/testFlex.json', 'r',encoding='utf-8')
-"""
 g = open(r'../json/coffee.json', 'r',encoding='utf-8')
 h = open(r'../json/greentea.json', 'r',encoding='utf-8')
 i = open(r'../json/juice.json', 'r',encoding='utf-8')
 j = open(r'../json/wain.json', 'r',encoding='utf-8')
-"""
+
 
 flex_message_json_dict = json.load(f)
-"""
 flex_message_coffee = json.load(g)
 flex_message_greentea = json.load(h)
 flex_message_juice = json.load(i)
 flex_message_wain = json.load(j)
-"""
+
 #Richmenuの読み込み
 richmenu.init_menu()
 
